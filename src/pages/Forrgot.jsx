@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CookiesProvider, useCookies } from "react-cookie";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Forrgot({
   cookies,
   setCookie,
@@ -12,13 +12,15 @@ export default function Forrgot({
   setUseremail,
   setPassword,
 }) {
-  const resetLink = async (event) => {
+  const Navigate = useNavigate();
+  const resetLink = async () => {
     // event.preventDefault();
+
     sendPasswordResetEmail(auth, useremail)
       .then(() => {
         // Password reset email sent!
         // ..
-        window.location.assign("http://localhost:3000");
+        // window.location.assign("http://localhost:3000");
         alert("Email sent");
         Navigate("/");
       })
@@ -43,7 +45,7 @@ export default function Forrgot({
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6">
+        <div className="space-y-6">
           <div>
             {/* <label
               htmlFor="email"
@@ -65,7 +67,6 @@ export default function Forrgot({
               />
             </div>
           </div>
-
           <div>
             <button
               type="submit"
@@ -75,7 +76,7 @@ export default function Forrgot({
               Send Reset Link
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

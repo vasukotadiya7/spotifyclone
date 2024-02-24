@@ -7,7 +7,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { CookiesProvider, useCookies } from "react-cookie";
 
 export default function Register({
@@ -35,6 +35,7 @@ export default function Register({
   // }
   const [username, setUsername] = useState(null);
   console.log(auth);
+  const Navigate = useNavigate();
   const createUser = (event) => {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, useremail, password)

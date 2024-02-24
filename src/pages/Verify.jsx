@@ -3,7 +3,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Verify({
   cookies,
   setCookie,
@@ -11,7 +11,17 @@ export default function Verify({
   useremail,
   handleSubmit,
 }) {
+  const Navigate = useNavigate();
   console.log(cookies);
+  const verification = async () => {
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+        alert("Email Sent");
+        Navigate("/");
+      })
+      .catch(alert);
+  };
+
   // if (cookies.useremail) {
   //   signInWithEmailAndPassword(auth, cookies.useremail, cookies.password)
   //     .then((userCredential) => {
@@ -28,42 +38,35 @@ export default function Verify({
   //     .catch(alert);
   // }
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex h-screen flex-1 flex-col bg-gradient-to-br from-black to-[#121286] justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
+          src="https://i.postimg.cc/1tKW8pXV/logo.png"
+          alt="logo"
         />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
           Verify your email
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
+        <div className="space-y-6">
           <div>
             <button
               type="submit"
-              onClick={() => {
-                sendEmailVerification(auth.currentUser)
-                  .then(() => {
-                    alert("Email Sent");
-                    Navigate("/");
-                  })
-                  .catch(alert);
-              }}
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={verification}
+              className="flex w-full justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-base font-semibold leading-6 text-indigo-500 shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500"
             >
               {useremail} Verify
             </button>
           </div>
-        </form>
+        </div>
 
-        <p className="mt-10 text-center text-sm text-gray-500">
+        <p className="mt-10 text-center text-sm text-white">
           Wrong email?{" "}
           <Link
             to={"/"}
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            className="font-semibold leading-6 text-yellow-400 hover:text-yellow-600"
           >
             Sign with another account
           </Link>

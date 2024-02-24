@@ -4,7 +4,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 export default function Login({
   cookies,
@@ -16,6 +16,7 @@ export default function Login({
   setPassword,
   setUser,
 }) {
+  const Navigate = useNavigate();
   const Signin = async () => {
     await signInWithEmailAndPassword(auth, useremail, password)
       .then((userCredential) => {
@@ -28,15 +29,15 @@ export default function Login({
         // setCookie("valid", true, { path: "/", maxAge: 604800 });
         // setCookie("useremail", useremail, { path: "/", maxAge: 604800 });
         // setCookie("password", password, { path: "/", maxAge: 604800 });
-        setCookie("useremail", useremail, { path: "/", maxAge: 604800 });
         if (user.emailVerified) {
           setUser(userCredential);
+          setCookie("useremail", useremail, { path: "/", maxAge: 604800 });
           setCookie("valid", true, { path: "/", maxAge: 604800 });
           setCookie("password", password, { path: "/", maxAge: 604800 });
           // Navigate("/");
         } else {
+          Navigate("/verify");
           alert("Please verify your email first");
-          // Navigate("/verify");
         }
       })
       .catch(alert);
