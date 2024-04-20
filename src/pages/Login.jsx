@@ -73,7 +73,7 @@ export default function Login({
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="https://i.postimg.cc/1tKW8pXV/logo.png"
+          src="https://i.postimg.cc/k4r7wp3V/logo.png"
           alt="logo"
         />
         <h2 className="mt-10 text-center text-2xl text-white font-bold leading-9 tracking-tight ">
